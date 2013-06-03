@@ -85,7 +85,7 @@ public class Variable {
 	}
 
 	public boolean equals(Variable other) {
-		return this.name == other.name;
+		return this.name.equals(other.name);
 	}
 
 	// DELETE ME::::::

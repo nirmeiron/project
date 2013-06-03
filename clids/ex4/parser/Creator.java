@@ -10,6 +10,7 @@ import clids.ex4.compile.MethodCall;
 import clids.ex4.compile.Variable;
 import clids.ex4.exceptions.InvalidValueException;
 import clids.ex4.exceptions.NoValueForFinalVarException;
+import clids.ex4.exceptions.VarAlreadyExistsException;
 import clids.ex4.misc.ToolBox;
 import clids.ex4.misc.Type;
 
@@ -38,7 +39,7 @@ public class Creator {
 	 *             if the variables are final, but no values was given to at
 	 *             least one of them
 	 */
-	public static LinkedList<Variable> parseDecLine(String decLine)
+	public static LinkedList<Variable> parseDecLine(String decLine, int line)
 			throws Exception {
 		LinkedList<Variable> newVariables = new LinkedList<Variable>();
 		Pattern dP = Pattern.compile(Regex.MULTI_DEC_LINE);
@@ -59,6 +60,7 @@ public class Creator {
 		// splits to individual declarations
 		String[] decsArr = decs.split(",");
 		for (String varName : decsArr) {
+			Variable newVar;
 			// the variable declaration contains "=", which means it is assigned
 			if (varName.indexOf('=') != -1) {
 				String value = varName.split("=")[1];
@@ -67,12 +69,19 @@ public class Creator {
 					if (!Classifier.legalTypeAssignment(type,
 							ToolBox.getTypeFromString(value)))
 						throw new InvalidValueException();
+				newVar = new Variable(isFinal, type, varName, line);
 				// the case where ToolBox.isVarName(value) = true is handled by
 				// parseVarNamesDec
 			} else if (isFinal)
 				throw new NoValueForFinalVarException();
-			newVariables.add(new Variable(isFinal, type, varName));
+			else
+				newVar = new Variable(isFinal, type, varName);
+			newVariables.add(newVar);
 		}
+		for(int i = 0; i< newVariables.size();i++)
+			for(int j = 0; j< newVariables.size();j++)
+				if(i!=j&&newVariables.get(i).getName().equals(newVariables.get(j).getName()))
+					throw new VarAlreadyExistsException();
 		return newVariables;
 	}
 
@@ -103,15 +112,16 @@ public class Creator {
 		int decsStartIndex = decLine.indexOf(dM.group(2))
 				+ dM.group(2).length();
 		String decs = decLine.substring(decsStartIndex);
-		// removes ';'
-		decs = decs.substring(0, decs.length() - 1);
 		// removes spaces
 		decs = decs.replaceAll("\\s", "");
+		// removes ';'
+		decs = decs.substring(0, decs.length() - 1);
+
 		// splits to individual declarations
 		String[] decsArr = decs.split(",");
 		for (String var : decsArr)
-			if (var.indexOf('=') != -1 && ToolBox.isVarName(var.split("=")[1])){
-				String value =var.split("=")[1];
+			if (var.indexOf('=') != -1 && !ToolBox.isValue(var.split("=")[1])) {
+				String value = var.split("=")[1];
 				preDecVars.add(value);
 			}
 		return preDecVars;
@@ -237,19 +247,23 @@ public class Creator {
 		mM.matches();
 		String methodName = mM.group(1);
 		String paramsLine = mM.group(2);
-		String[] params = paramsLine.split(",");
+		
+		if (paramsLine != null) {
+			String[] params = paramsLine.split(",");
 
-		for (String param : params) {
-			boolean isFinal = param.replaceAll("\\s", "").startsWith("final");
-			Pattern pP = Pattern.compile(Regex.PARAM);
-			Matcher pM = pP.matcher(param);
-			pM.matches();
-			Type paramType = (ToolBox.getTypeFromName(pM.group(1)));
-			String paramName = param.split(pM.group(1))[1].split("\\s")[1];
-			Variable var = new Variable(isFinal, paramType, paramName,
-					startLine);
-			paramsList.add(var);
-			typesList.add(paramType);
+			for (String param : params) {
+				boolean isFinal = param.replaceAll("\\s", "").startsWith(
+						"final");
+				Pattern pP = Pattern.compile(Regex.PARAM);
+				Matcher pM = pP.matcher(param);
+				pM.matches();
+				Type paramType = (ToolBox.getTypeFromName(pM.group(1)));
+				String paramName = param.split(pM.group(1))[1].split("\\s")[1];
+				Variable var = new Variable(isFinal, paramType, paramName,
+						startLine);
+				paramsList.add(var);
+				typesList.add(paramType);
+			}
 		}
 		return new MethodBlock(methodName, paramsList, cbMethod, typesList);
 	}

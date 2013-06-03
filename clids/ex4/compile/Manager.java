@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import clids.ex4.exceptions.DoubleDeclarationException;
 import clids.ex4.exceptions.InvalidValueException;
 import clids.ex4.exceptions.MessageException;
+import clids.ex4.exceptions.NotInitializedAssignException;
 import clids.ex4.exceptions.UnexpectedLineException;
 import clids.ex4.exceptions.VarNotExistsException;
 import clids.ex4.parser.*;
@@ -31,14 +32,14 @@ public class Manager {
 				}
 				if (Classifier.isMethodLine(data[i])) {
 					MethodBlock method = Creator.parseMethodLine(data, i);
-					i = method.getEndLine() - 1;
+					i = method.getEndLine();
 					Manager.allMethods.add(method);
 					continue;
 				}
 				if (Classifier.isDeclerationLine(data[i])) {
 					LinkedList<String> assigned = Creator
 							.parseVarNamesDec(data[i]);
-					if (assigned.size() > 1) {
+					if (assigned.size() > 1) {// i changed 1 to 2
 						Type decType = ToolBox.getTypeFromName(assigned.get(0));
 
 						for (int j = 1; j < assigned.size(); j++) {
@@ -48,11 +49,15 @@ public class Manager {
 							if (place == -1) {
 								throw new VarNotExistsException();
 							}
-							this.allVars.get(place);//HERE !!
+							if (this.allVars.get(place).getIntialisationLine() == -1) {
+								throw new NotInitializedAssignException();
+							}
+							this.allVars.get(place);// HERE !!
 
 						}
 					}
-					LinkedList<Variable> vars = Creator.parseDecLine(data[i]);
+					LinkedList<Variable> vars = Creator
+							.parseDecLine(data[i], i);
 					for (Variable current : vars) {
 						int index = ToolBox.existsInList(current, this.allVars);
 						if (index != -1) {

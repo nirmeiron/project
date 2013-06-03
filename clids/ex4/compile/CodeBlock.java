@@ -113,7 +113,7 @@ public class CodeBlock {
 
 	// !
 	public void compile(String[] data) throws MessageException , NoReturnStatementException {
-		for (int i = this.startLine; i < this.endLine; i++) {// CHECK LIMITS
+		for (int i = this.startLine+1; i < this.endLine; i++) {// CHECK LIMITS
 																// !!!!!!!!
 			try {
 				if (Classifier.isComment(data[i])) {
@@ -144,7 +144,7 @@ public class CodeBlock {
 						}
 					}
 
-					LinkedList<Variable> vars = Creator.parseDecLine(data[i]);
+					LinkedList<Variable> vars = Creator.parseDecLine(data[i],i);
 					for (Variable current : vars) {
 						int indexInLocal = ToolBox.existsInList(current,
 								this.localMembers);

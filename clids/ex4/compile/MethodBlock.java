@@ -6,6 +6,7 @@ import clids.ex4.exceptions.MessageException;
 import clids.ex4.exceptions.NoReturnStatementException;
 import clids.ex4.misc.Type;
 import clids.ex4.parser.Classifier;
+
 //
 public class MethodBlock extends CodeBlock {
 	private String name;
@@ -50,6 +51,12 @@ public class MethodBlock extends CodeBlock {
 	}
 
 	public boolean matches(LinkedList<Type> other) {
+		if (other == null && this.params == null) {
+			return true;
+		}
+		if (other == null || this.params == null) {
+			return false;
+		}
 		if (other.size() != this.params.size())
 			return false;
 		for (int i = 0; i < other.size(); i++) {
@@ -61,9 +68,11 @@ public class MethodBlock extends CodeBlock {
 	}
 
 	@Override
-	public void compile(String[] data) throws MessageException, NoReturnStatementException {
+	public void compile(String[] data) throws MessageException,
+			NoReturnStatementException {
 		if (!Classifier.hasReturnStatement(this, data))
 			throw new NoReturnStatementException();
+		this.endLine--;
 		super.compile(data);
 	}
 

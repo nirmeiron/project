@@ -18,3 +18,4 @@
 /IlegalAssignmentException.class
 /MethodDoesntExistsException.class
 /ParamsDoesntMatchException.class
+/NotInitializedAssignException.class
