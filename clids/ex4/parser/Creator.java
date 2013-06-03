@@ -8,6 +8,7 @@ import clids.ex4.compile.CodeBlock;
 import clids.ex4.compile.MethodBlock;
 import clids.ex4.compile.MethodCall;
 import clids.ex4.compile.Variable;
+import clids.ex4.exceptions.IleagalBracketsException;
 import clids.ex4.exceptions.InvalidValueException;
 import clids.ex4.exceptions.NoValueForFinalVarException;
 import clids.ex4.exceptions.VarAlreadyExistsException;
@@ -78,9 +79,11 @@ public class Creator {
 				newVar = new Variable(isFinal, type, varName);
 			newVariables.add(newVar);
 		}
-		for(int i = 0; i< newVariables.size();i++)
-			for(int j = 0; j< newVariables.size();j++)
-				if(i!=j&&newVariables.get(i).getName().equals(newVariables.get(j).getName()))
+		for (int i = 0; i < newVariables.size(); i++)
+			for (int j = 0; j < newVariables.size(); j++)
+				if (i != j
+						&& newVariables.get(i).getName()
+								.equals(newVariables.get(j).getName()))
 					throw new VarAlreadyExistsException();
 		return newVariables;
 	}
@@ -202,8 +205,9 @@ public class Creator {
 	 * @param data
 	 * @param start
 	 * @return
+	 * @throws IleagalBracketsException 
 	 */
-	public static CodeBlock parseCBLimits(String[] data, int start) {
+	public static CodeBlock parseCBLimits(String[] data, int start) throws IleagalBracketsException {
 		int end = -1, counter = 0;
 		for (int i = start; i < data.length; i++) {
 			if (data[i].indexOf('{') != -1) {
@@ -215,6 +219,9 @@ public class Creator {
 					break;
 				}
 			}
+		}
+		if (counter != 0) {
+			throw new IleagalBracketsException();
 		}
 		CodeBlock result = new CodeBlock(start, end);
 		return result;
@@ -232,9 +239,10 @@ public class Creator {
 	 *            - the start line
 	 * @return MethodBlock object representing the parsed method
 	 * @throws InvalidValueException
+	 * @throws IleagalBracketsException 
 	 */
 	public static MethodBlock parseMethodLine(String[] data, int startLine)
-			throws InvalidValueException {
+			throws InvalidValueException, IleagalBracketsException {
 
 		String methodLine = data[startLine];
 		CodeBlock cbMethod = Creator.parseCBLimits(data, startLine);
@@ -247,7 +255,7 @@ public class Creator {
 		mM.matches();
 		String methodName = mM.group(1);
 		String paramsLine = mM.group(2);
-		
+
 		if (paramsLine != null) {
 			String[] params = paramsLine.split(",");
 
