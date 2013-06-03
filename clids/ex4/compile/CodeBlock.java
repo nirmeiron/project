@@ -135,12 +135,24 @@ public class CodeBlock {
 					LinkedList<String> assigned = Creator
 							.parseVarNamesDec(data[i]);
 					Type decType = ToolBox.getTypeFromName(assigned.get(0));
-					for (int j = 1; i < assigned.size(); i++) {
-						int place = ToolBox.existsInList(new Variable(false,
-								decType, assigned.get(j)), ToolBox.merge(
-								this.oldMembers, this.localMembers));
-						if (place == -1) {
+					for (int j = 1; j < assigned.size(); j++) {
+						int placeInOlds = ToolBox.existsInList(new Variable(
+								false, decType, assigned.get(j)),
+								this.oldMembers);
+						int placeInLocal = ToolBox.existsInList(new Variable(
+								false, decType, assigned.get(j)),
+								this.localMembers);
+						if (placeInOlds == -1 && placeInLocal == -1) {
 							throw new VarNotExistsException();
+						}
+						if (placeInLocal != -1) {
+							if (this.localMembers.get(placeInLocal)
+									.getIntialisationLine() == -1)
+								throw new NotInitializedAssignException();
+						} else {
+							if (this.oldMembers.get(placeInOlds)
+									.getIntialisationLine() == -1)
+								throw new NotInitializedAssignException();
 						}
 					}
 
