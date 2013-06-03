@@ -8,7 +8,8 @@ public class Regex {
 	public static final String METHOD_NAME = "(?:[a-zA-Z])+\\w*";
 	public static final String VAR_NAME = "_?" + METHOD_NAME;
 	public static final String COMMENT_LINE = SPACE + "//.*";
-	public static final String RETURN_LINE = SPACE + "return" + SPACE + ";";
+	public static final String RETURN_LINE = SPACE + "|\\t" + "return" + SPACE
+			+ ";";
 
 	// Values:
 	public static final String INT_RE = "-?\\d+";// V
@@ -56,6 +57,6 @@ public class Regex {
 	public static final String PREFIX_CONDITION = "(?:if)|(?:while)";
 
 	public static final String CONDITION_LINE = SPACE + PREFIX_CONDITION
-			+ "\\(" + MULTI_CONDITIONS + "\\)" + SPACE + "{" + SPACE;
+			+ "\\(" + MULTI_CONDITIONS + "\\)" + SPACE + "\\{" + SPACE;
 
 }
