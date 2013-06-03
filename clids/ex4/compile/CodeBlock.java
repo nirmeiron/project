@@ -177,15 +177,27 @@ public class CodeBlock {
 					String[] result = Creator.parseAssignLine(data[i]);
 					String varName = result[0];
 					String value = result[1];
-					Type first;
-					try {
-						first = getTypeFromValue(varName);
-					} catch (VarNotExistsException e) {
-						throw new AssignToUndeclaredException();
+
+					int indexInLocal = ToolBox.existsInList(varName,
+							this.localMembers);
+					int indexInOlds = ToolBox.existsInList(varName,
+							this.oldMembers);
+					if (indexInLocal == -1 && indexInOlds == -1) {
+						throw new VarNotExistsException();
+					}
+					Variable first;
+					if (indexInLocal != -1) {
+						first = this.localMembers.get(indexInLocal);
+					} else
+						first = this.oldMembers.get(indexInOlds);
+
+					if (first.isFinal()) {
+						throw new AssignmentToFinalException();
 					}
 					Type second = getTypeFromValue(value);
 
-					if (!Classifier.legalTypeAssignment(first, second))
+					if (!Classifier
+							.legalTypeAssignment(first.getType(), second))
 						throw new IlegalAssignmentException();
 					continue;
 				}
