@@ -45,7 +45,8 @@ public class Regex {
 	public static final String CALL_MULTI_PARAMS = CALL_PARAM + "(?:" + SPACE
 			+ "," + SPACE + CALL_PARAM + ")*";
 	public static final String METHOD_CALL = SPACE + "(" + METHOD_NAME + ")\\("
-			+ CALL_MULTI_PARAMS + "\\)" + SPACE + ";" + SPACE;
+			+ SPACE + "(?:" +SPACE+ CALL_MULTI_PARAMS + SPACE + ")?\\)" + SPACE + ";"
+			+ SPACE;
 
 	public static final String CONDITION = "(?:" + BOOLEAN_RE + ")||(?:"
 			+ VAR_NAME + ")";

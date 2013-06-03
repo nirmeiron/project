@@ -191,9 +191,11 @@ public class Creator {
 		LinkedList<String> result = new LinkedList<String>();
 		String methodName = methodCall.split("\\(")[0];
 		String params = methodCall.split("\\(")[1].split("\\)")[0];
-		String[] parameters = params.split(",");
-		for (String param : parameters)
-			result.add(param);
+		if (!params.equals("")) {
+			String[] parameters = params.split(",");
+			for (String param : parameters)
+				result.add(param);
+		}
 		return new MethodCall(methodName, result);
 	}
 
@@ -205,9 +207,10 @@ public class Creator {
 	 * @param data
 	 * @param start
 	 * @return
-	 * @throws IleagalBracketsException 
+	 * @throws IleagalBracketsException
 	 */
-	public static CodeBlock parseCBLimits(String[] data, int start) throws IleagalBracketsException {
+	public static CodeBlock parseCBLimits(String[] data, int start)
+			throws IleagalBracketsException {
 		int end = -1, counter = 0;
 		for (int i = start; i < data.length; i++) {
 			if (data[i].indexOf('{') != -1) {
@@ -239,11 +242,12 @@ public class Creator {
 	 *            - the start line
 	 * @return MethodBlock object representing the parsed method
 	 * @throws InvalidValueException
-	 * @throws IleagalBracketsException 
-	 * @throws VarAlreadyExistsException 
+	 * @throws IleagalBracketsException
+	 * @throws VarAlreadyExistsException
 	 */
 	public static MethodBlock parseMethodLine(String[] data, int startLine)
-			throws InvalidValueException, IleagalBracketsException, VarAlreadyExistsException {
+			throws InvalidValueException, IleagalBracketsException,
+			VarAlreadyExistsException {
 
 		String methodLine = data[startLine];
 		CodeBlock cbMethod = Creator.parseCBLimits(data, startLine);

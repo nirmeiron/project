@@ -112,8 +112,9 @@ public class CodeBlock {
 	}
 
 	// !
-	public void compile(String[] data) throws MessageException , NoReturnStatementException {
-		for (int i = this.startLine+1; i < this.endLine; i++) {
+	public void compile(String[] data) throws MessageException,
+			NoReturnStatementException {
+		for (int i = this.startLine + 1; i < this.endLine; i++) {
 			try {
 				if (Classifier.isComment(data[i])) {
 					continue;
@@ -143,7 +144,8 @@ public class CodeBlock {
 						}
 					}
 
-					LinkedList<Variable> vars = Creator.parseDecLine(data[i],i);
+					LinkedList<Variable> vars = Creator
+							.parseDecLine(data[i], i);
 					for (Variable current : vars) {
 						int indexInLocal = ToolBox.existsInList(current,
 								this.localMembers);
@@ -183,8 +185,10 @@ public class CodeBlock {
 					}
 					LinkedList<Type> callTypes = new LinkedList<Type>();
 					LinkedList<String> callValues = call.getParams();
-					for (String value : callValues) {
-						callTypes.add(getTypeFromValue(value));
+					if (callValues.size() > 0) {
+						for (String value : callValues) {
+							callTypes.add(getTypeFromValue(value));
+						}
 					}
 					if (!method.matches(callTypes)) {
 						throw new ParamsDoesntMatchException();
