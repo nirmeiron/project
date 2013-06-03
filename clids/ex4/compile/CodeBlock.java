@@ -116,7 +116,7 @@ public class CodeBlock {
 			NoReturnStatementException {
 		for (int i = this.startLine + 1; i < this.endLine; i++) {
 			try {
-				if (Classifier.isComment(data[i])) {
+				if (Classifier.isComment(data[i])||Classifier.isReturnStatement(data[i])) {
 					continue;
 				}
 				if (Classifier.isMethodLine(data[i])) {
@@ -135,12 +135,24 @@ public class CodeBlock {
 					LinkedList<String> assigned = Creator
 							.parseVarNamesDec(data[i]);
 					Type decType = ToolBox.getTypeFromName(assigned.get(0));
-					for (int j = 1; i < assigned.size(); i++) {
-						int place = ToolBox.existsInList(new Variable(false,
-								decType, assigned.get(j)), ToolBox.merge(
-								this.oldMembers, this.localMembers));
-						if (place == -1) {
+					for (int j = 1; j < assigned.size(); j++) {
+						int placeInOlds = ToolBox.existsInList(new Variable(
+								false, decType, assigned.get(j)),
+								this.oldMembers);
+						int placeInLocal = ToolBox.existsInList(new Variable(
+								false, decType, assigned.get(j)),
+								this.localMembers);
+						if (placeInOlds == -1 && placeInLocal == -1) {
 							throw new VarNotExistsException();
+						}
+						if (placeInLocal != -1) {
+							if (this.localMembers.get(placeInLocal)
+									.getIntialisationLine() == -1)
+								throw new NotInitializedAssignException();
+						} else {
+							if (this.oldMembers.get(placeInOlds)
+									.getIntialisationLine() == -1)
+								throw new NotInitializedAssignException();
 						}
 					}
 
@@ -165,15 +177,27 @@ public class CodeBlock {
 					String[] result = Creator.parseAssignLine(data[i]);
 					String varName = result[0];
 					String value = result[1];
-					Type first;
-					try {
-						first = getTypeFromValue(varName);
-					} catch (VarNotExistsException e) {
-						throw new AssignToUndeclaredException();
+
+					int indexInLocal = ToolBox.existsInList(varName,
+							this.localMembers);
+					int indexInOlds = ToolBox.existsInList(varName,
+							this.oldMembers);
+					if (indexInLocal == -1 && indexInOlds == -1) {
+						throw new VarNotExistsException();
+					}
+					Variable first;
+					if (indexInLocal != -1) {
+						first = this.localMembers.get(indexInLocal);
+					} else
+						first = this.oldMembers.get(indexInOlds);
+
+					if (first.isFinal()) {
+						throw new AssignmentToFinalException();
 					}
 					Type second = getTypeFromValue(value);
 
-					if (!Classifier.legalTypeAssignment(first, second))
+					if (!Classifier
+							.legalTypeAssignment(first.getType(), second))
 						throw new IlegalAssignmentException();
 					continue;
 				}

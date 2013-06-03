@@ -61,7 +61,7 @@ public class Classifier {
 	 * @return true iff the line starts with "//"
 	 */
 	public static boolean isComment(String line) {
-		return (line.matches(Regex.COMMENT_LINE)||line.equals(""));
+		return (line.matches(Regex.COMMENT_LINE) || line.equals(""));
 	}
 
 	/**
@@ -187,7 +187,10 @@ public class Classifier {
 		int lineNum = method.getEndLine() - 1;
 		while (isComment(data[lineNum]))
 			lineNum--;
-		return data[lineNum]
-				.matches(Regex.RETURN_LINE);
+		return data[lineNum].matches(Regex.RETURN_LINE);
+	}
+
+	public static boolean isReturnStatement(String string) {
+		return string.matches(Regex.RETURN_LINE);
 	}
 }
