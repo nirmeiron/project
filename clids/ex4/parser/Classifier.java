@@ -188,6 +188,6 @@ public class Classifier {
 		while (isComment(data[lineNum]))
 			lineNum--;
 		return data[lineNum]
-				.matches(Regex.SPACE + "return" + Regex.SPACE + ";");
+				.matches(Regex.RETURN_LINE);
 	}
 }

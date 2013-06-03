@@ -8,6 +8,7 @@ public class Regex {
 	public static final String METHOD_NAME = "(?:[a-zA-Z])+\\w*";
 	public static final String VAR_NAME = "_?" + METHOD_NAME;
 	public static final String COMMENT_LINE = SPACE + "//.*";
+	public static final String RETURN_LINE = SPACE + "return" + SPACE + ";";
 
 	// Values:
 	public static final String INT_RE = "-?\\d+";// V
@@ -25,12 +26,13 @@ public class Regex {
 			+ SPACE + DECLARATION + ")*";
 
 	public static final String MULTI_DEC_LINE = SPACE + "(final" + MUST_SPACE
-			+ ")?" + TYPE_RE + MUST_SPACE + SPACE + MULTI_DEC + SPACE + ";" + SPACE;
+			+ ")?" + TYPE_RE + MUST_SPACE + SPACE + MULTI_DEC + SPACE + ";"
+			+ SPACE;
 
 	public static final String ASSIGN_LINE = DECLARATION + ";" + SPACE;
 
-	public static final String PARAM = "(?:final)?" + SPACE + "("+TYPE_RE + ")"
-			+ MUST_SPACE + VAR_NAME;
+	public static final String PARAM = "(?:final)?" + SPACE + "(" + TYPE_RE
+			+ ")" + MUST_SPACE + VAR_NAME;
 	public static final String MULTI_PARAMS = "(" + PARAM + "(?:" + SPACE + ","
 			+ SPACE + PARAM + SPACE + ")*)?";
 
