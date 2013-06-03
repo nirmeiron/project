@@ -61,7 +61,7 @@ public class Classifier {
 	 * @return true iff the line starts with "//"
 	 */
 	public static boolean isComment(String line) {
-		return (line.startsWith("//"));
+		return (line.matches(Regex.COMMENT_LINE)||line.equals(""));
 	}
 
 	/**

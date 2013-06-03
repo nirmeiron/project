@@ -118,7 +118,7 @@ public class Creator {
 		// removes spaces
 		decs = decs.replaceAll("\\s", "");
 		// removes ';'
-		decs = decs.substring(0, decs.length() - 1);
+		decs = decs.split(";")[0];
 
 		// splits to individual declarations
 		String[] decsArr = decs.split(",");

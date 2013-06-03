@@ -113,8 +113,7 @@ public class CodeBlock {
 
 	// !
 	public void compile(String[] data) throws MessageException , NoReturnStatementException {
-		for (int i = this.startLine+1; i < this.endLine; i++) {// CHECK LIMITS
-																// !!!!!!!!
+		for (int i = this.startLine+1; i < this.endLine; i++) {
 			try {
 				if (Classifier.isComment(data[i])) {
 					continue;
