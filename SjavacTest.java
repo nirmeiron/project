@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author t7639192
+ * @author Nir&Ira
  */
 public class SjavacTest extends TestCase {
 
