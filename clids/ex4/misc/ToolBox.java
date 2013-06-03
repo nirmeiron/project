@@ -24,9 +24,9 @@ public class ToolBox {
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length(); j++) {
 				char current = data[i].charAt(j);
-				if (current == '(')
+				if (current == '{')
 					counter++;
-				else if (current == ')') {
+				else if (current == '}') {
 					counter--;
 					if (counter < 0)
 						return false;

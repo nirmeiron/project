@@ -116,7 +116,7 @@ public class CodeBlock {
 			NoReturnStatementException {
 		for (int i = this.startLine + 1; i < this.endLine; i++) {
 			try {
-				if (Classifier.isComment(data[i])) {
+				if (Classifier.isComment(data[i])||Classifier.isReturnStatement(data[i])) {
 					continue;
 				}
 				if (Classifier.isMethodLine(data[i])) {

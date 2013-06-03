@@ -3,7 +3,7 @@ package clids.ex4.parser;
 public class Regex {
 
 	// Basics
-	public static final String SPACE = "\\s*+";
+	public static final String SPACE = "\\s*";
 	public static final String MUST_SPACE = "\\s+";
 	public static final String METHOD_NAME = "(?:[a-zA-Z])+\\w*";
 	public static final String VAR_NAME = "_?" + METHOD_NAME;
@@ -45,18 +45,19 @@ public class Regex {
 	public static final String CALL_MULTI_PARAMS = CALL_PARAM + "(?:" + SPACE
 			+ "," + SPACE + CALL_PARAM + ")*";
 	public static final String METHOD_CALL = SPACE + "(" + METHOD_NAME + ")\\("
-			+ SPACE + "(?:" +SPACE+ CALL_MULTI_PARAMS + SPACE + ")?\\)" + SPACE + ";"
-			+ SPACE;
+			+ SPACE + "(?:" + SPACE + CALL_MULTI_PARAMS + SPACE + ")?\\)"
+			+ SPACE + ";" + SPACE;
 
 	public static final String CONDITION = "(?:" + BOOLEAN_RE + ")||(?:"
 			+ VAR_NAME + ")";
 	public static final String LOGICAL = "(?:\\|\\|)|(?:\\&\\&)";
 
 	public static final String MULTI_CONDITIONS = "(?:" + CONDITION + "(?:"
-			+ SPACE + LOGICAL + SPACE + CONDITION + ")*)";
-	public static final String PREFIX_CONDITION = "(?:if)|(?:while)";
+			+ SPACE + LOGICAL + SPACE + CONDITION + SPACE + ")*)";
+	public static final String PREFIX_CONDITION = "(?:(?:if)|(?:while))";
 
 	public static final String CONDITION_LINE = SPACE + PREFIX_CONDITION
-			+ "\\(" + MULTI_CONDITIONS + "\\)" + SPACE + "\\{" + SPACE;
+			+ SPACE + "\\(" + SPACE + "(?:" + MULTI_CONDITIONS + SPACE
+			+ ")?\\)" + SPACE + "\\{" + SPACE;
 
 }
