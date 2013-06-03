@@ -1,0 +1,77 @@
+elirasa2
+nmeiro37
+
+
+=======================================================
+Ira Rosenblum, 312508856, elirasa2@gmail.com
+Nir Meiron, 205947351, nirmeiron@gmail.com
+=======================================================
+
+                           Exercise 4 - s-java compiler
+                          -------------------------- 
+
+Submitted Files
+---------------
+README - This file
+clids
+ex4
+compile
+	Manager.java - a upper class containing a single method, "compile", that regulates and
+						manages all the program's action;
+	Variable.java - a class that represents a s-java variable
+	CodeBlock.java -	a class that represents a code block, that can be a method, an if
+						block or while block
+	MathodBlock.java - extends CodeBlock, represents the more specific characteristics of a 
+						method block
+	AfterFilter.java - a filter class that receives a date, and accepts only files
+			   			created after this date
+	MaethodCall.java - an class the represents a call to an existing method
+	
+main
+	Sjavac.java - contains the main method, parses a given file to a string, and
+					compiles it using the manager
+misc	
+	Type.java - an enumerator class, representing the variable type supported by the language
+	ToolBox.java - a general helper class, containing many useful functionalities
+		     
+parser
+	Classifier.java - a class containing methods used to distinguish and classify different
+						code lines
+	Creator.java - parses the already sorted code, and get from the valuable information
+					needed to the compiler   
+	Regex.java - a class that stores a set of regexes, used by most other classes       
+filescript
+	MyFileScript.java - a class that contains the main method. receives an array of two strings,
+	the paths to the source directory and command file. launches the program
+exceptions
+	are thrown each time a particular error occurs, their names are self explanatory:
+		AlreadyInitializedException.java
+		AssignmentToFinalException.java
+		AssignToUndeclaredException.java
+		DoubleDeclarationException.java
+		IleagalBracketsException.java
+		IlegalAssignmentException.java
+		InvalidValueException.java
+		MessageException.java
+		MethodDoesntExistsException.java
+		NoReturnStatementException.java
+		NotInitializedAssignException.java
+		NoValueForFinalVarException.java
+		ParamsDoesntMatchException.java
+		TypeAssignmentException.java
+		UnexpectedLineException.java
+		VarAlreadyExistsException.java
+		VarNotExistsException.java
+--------------------------------		
+\\\\\\\\\\\\Design//////////////
+--------------------------------
+
+
+---------------------------------
+\\\\\\implementation issues//////
+---------------------------------
+
+
+--------------------------------
+\\\\\\\\error handling//////////
+--------------------------------
