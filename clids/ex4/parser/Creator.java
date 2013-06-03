@@ -240,9 +240,10 @@ public class Creator {
 	 * @return MethodBlock object representing the parsed method
 	 * @throws InvalidValueException
 	 * @throws IleagalBracketsException 
+	 * @throws VarAlreadyExistsException 
 	 */
 	public static MethodBlock parseMethodLine(String[] data, int startLine)
-			throws InvalidValueException, IleagalBracketsException {
+			throws InvalidValueException, IleagalBracketsException, VarAlreadyExistsException {
 
 		String methodLine = data[startLine];
 		CodeBlock cbMethod = Creator.parseCBLimits(data, startLine);
@@ -273,6 +274,12 @@ public class Creator {
 				typesList.add(paramType);
 			}
 		}
+		for (int i = 0; i < paramsList.size(); i++)
+			for (int j = 0; j < paramsList.size(); j++)
+				if (i != j
+						&& paramsList.get(i).getName()
+								.equals(paramsList.get(j).getName()))
+					throw new VarAlreadyExistsException();
 		return new MethodBlock(methodName, paramsList, cbMethod, typesList);
 	}
 }
