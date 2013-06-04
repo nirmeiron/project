@@ -66,7 +66,7 @@ public class Creator {
 			if (varName.indexOf('=') != -1) {
 				String value = varName.split("=")[1];
 				varName = varName.split("=")[0];
-				if (ToolBox.isValue(value))
+				if (Classifier.isValue(value))
 					if (!Classifier.legalTypeAssignment(type,
 							ToolBox.getTypeFromString(value)))
 						throw new InvalidValueException();
@@ -123,7 +123,8 @@ public class Creator {
 		// splits to individual declarations
 		String[] decsArr = decs.split(",");
 		for (String var : decsArr)
-			if (var.indexOf('=') != -1 && !ToolBox.isValue(var.split("=")[1])) {
+			if (var.indexOf('=') != -1
+					&& !Classifier.isValue(var.split("=")[1])) {
 				String value = var.split("=")[1];
 				preDecVars.add(value);
 			}
@@ -174,6 +175,26 @@ public class Creator {
 		String value = assignLine.substring(varName.length() + 1,
 				assignLine.indexOf(';'));
 		String[] result = { varName, value };
+		return result;
+	}
+
+	public static LinkedList<String> parseVarsCondition(String line) {
+		Pattern conditionPattern = Pattern.compile(Regex.CONDITION_LINE);
+		Matcher conditionMatcher = conditionPattern.matcher(line);
+		conditionMatcher.matches();
+
+		LinkedList<String> result = new LinkedList<String>();
+
+		String multiCons = conditionMatcher.group(1);
+		multiCons.replaceAll("\\s", "");
+		String[] cons = multiCons.split(Regex.LOGICAL);
+		if (cons != null && cons.length > 0) {
+			for (String condition : cons) {
+				if (!Classifier.isValue(condition)) {
+					result.add(condition);
+				}
+			}
+		}
 		return result;
 	}
 

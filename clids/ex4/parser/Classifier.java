@@ -128,6 +128,7 @@ public class Classifier {
 	 * @return true iff the line is of the right form
 	 */
 	public static boolean isConditional(String line) {
+		line=line.replaceAll("\\s*", "");
 		Pattern conditionPattern = Pattern.compile(Regex.CONDITION_LINE);
 		Matcher conditionMatcher = conditionPattern.matcher(line);
 		return conditionMatcher.matches();
@@ -154,7 +155,7 @@ public class Classifier {
 		for (int i = 0; i < method.size(); i++) {
 			Type mParam = method.get(i);
 			String cParamName = (call.get(i));
-			if (ToolBox.isValue(cParamName))
+			if (Classifier.isValue(cParamName))
 				try {
 					if (!ToolBox.getTypeFromString(cParamName).equals(mParam))
 						return false;
@@ -192,5 +193,17 @@ public class Classifier {
 
 	public static boolean isReturnStatement(String string) {
 		return string.matches(Regex.RETURN_LINE);
+	}
+
+	/**
+	 * returns whether the given string is a valid value
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static boolean isValue(String value) {
+		Pattern vP = Pattern.compile(Regex.SPACE + Regex.VALUE + Regex.SPACE);
+		Matcher vM = vP.matcher(value);
+		return vM.matches();
 	}
 }

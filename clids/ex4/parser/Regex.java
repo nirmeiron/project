@@ -14,10 +14,10 @@ public class Regex {
 	public static final String INT_RE = "-?\\d+";// V
 	public static final String DOUBLE_RE = INT_RE + "(?:\\.\\d+)?";
 	public static final String STRING_RE = "\".*\"";
-	public static final String BOOLEAN_RE = DOUBLE_RE + "|true|false";
+	public static final String BOOLEAN_RE = DOUBLE_RE + "|(?:true)|(?:false)";
 	public static final String CHAR_RE = "\'.\'";
-	public static final String VALUE = "(?:" + CHAR_RE + "|" + BOOLEAN_RE + "|"
-			+ STRING_RE + ")";
+	public static final String VALUE = "(?:(?:" + CHAR_RE + ")|(?:"
+			+ BOOLEAN_RE + ")|(?:" + STRING_RE + "))";
 
 	public static final String TYPE_RE = "(int|double|String|boolean|char)";
 	public static final String DECLARATION = "(" + VAR_NAME + ")" + SPACE
@@ -40,8 +40,8 @@ public class Regex {
 			+ "(" + METHOD_NAME + ")\\(" + SPACE + MULTI_PARAMS + SPACE + "\\)"
 			+ SPACE + "\\{" + SPACE;
 
-	public static final String CALL_PARAM = "(?:" + VAR_NAME + "|" + VALUE
-			+ ")";
+	public static final String CALL_PARAM = "(?:(?:" + VAR_NAME + ")|(?:"
+			+ VALUE + "))";
 	public static final String CALL_MULTI_PARAMS = CALL_PARAM + "(?:" + SPACE
 			+ "," + SPACE + CALL_PARAM + ")*";
 	public static final String METHOD_CALL = SPACE + "(" + METHOD_NAME + ")\\("
@@ -57,7 +57,7 @@ public class Regex {
 	public static final String PREFIX_CONDITION = "(?:(?:if)|(?:while))";
 
 	public static final String CONDITION_LINE = SPACE + PREFIX_CONDITION
-			+ SPACE + "\\(" + SPACE + "(?:" + MULTI_CONDITIONS + SPACE
-			+ ")?\\)" + SPACE + "\\{" + SPACE;
+			+ SPACE + "\\(" + SPACE + "(" + MULTI_CONDITIONS + SPACE + ")?\\)"
+			+ SPACE + "\\{" + SPACE;
 
 }
