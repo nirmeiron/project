@@ -182,17 +182,7 @@ public class ToolBox {
 		return vM.matches();
 	}
 
-	/**
-	 * returns whether the given string is a valid value
-	 * 
-	 * @param string
-	 * @return
-	 */
-	public static boolean isValue(String value) {
-		Pattern vP = Pattern.compile(Regex.VALUE);
-		Matcher vM = vP.matcher(value);
-		return vM.matches();
-	}
+	
 
 	public static int existsInList(Variable member, LinkedList<Variable> list) {
 		if (list == null)

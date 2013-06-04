@@ -1,16 +1,7 @@
 package clids.ex4.misc;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
+import clids.ex4.parser.*;
 
-import java.util.regex.Pattern;
-
-import clids.ex4.compile.CodeBlock;
-import clids.ex4.exceptions.*;
-
-import clids.ex4.exceptions.InvalidValueException;
-import clids.ex4.misc.Type;
-import clids.ex4.compile.*;
 
 public class NirPlayground {
 
@@ -30,22 +21,8 @@ public class NirPlayground {
 			+ MULTI_PARAMS_RE + SPACE_RE + "\\)";
 
 	public static void main(String[] args) {
-		String[] data = null;
-		try {
-			data = ToolBox.importData("test502.sjava");
-		} catch (IOException e) {
-			System.out.println("until when");
-			e.printStackTrace();
-		}
-		Manager man=new Manager();
-		try {
-			man.compile(data);
-		} catch (MessageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		
+		String st = " if(a||b){";
+		System.out.println(st.matches(Regex.CONDITION_LINE));
 
 	}
 }

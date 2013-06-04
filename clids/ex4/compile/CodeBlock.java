@@ -116,18 +116,48 @@ public class CodeBlock {
 			NoReturnStatementException {
 		for (int i = this.startLine + 1; i < this.endLine; i++) {
 			try {
-				if (Classifier.isComment(data[i])||Classifier.isReturnStatement(data[i])) {
+				if (Classifier.isComment(data[i])
+						|| Classifier.isReturnStatement(data[i])) {
 					continue;
 				}
 				if (Classifier.isMethodLine(data[i])) {
 					throw new UnexpectedLineException();
 				}
 				if (Classifier.isConditional(data[i])) {
+					LinkedList<String> usedVars = Creator
+							.parseVarsCondition(data[i]);
+					if (usedVars != null && usedVars.size() > 0) {
+						for (String current : usedVars) {
+							current = current.replaceAll("\\s", "");
+							if (!Classifier.isValue(current)) {
+
+								int indexInLocal = ToolBox.existsInList(
+										current, this.localMembers);
+								int indexInOlds = ToolBox.existsInList(current,
+										this.oldMembers);
+								if (indexInLocal == -1 && indexInOlds == -1) {
+									throw new VarNotExistsException();
+								}
+								Variable var;
+								if (indexInLocal != -1) {
+									var = this.localMembers.get(indexInLocal);
+								} else {
+									var = this.oldMembers.get(indexInOlds);
+								}
+								if (!Classifier.legalTypeAssignment(
+										Type.BOOLEAN, var.getType())) {
+									throw new MustBeBooleanException();
+								}
+								if (var.getIntialisationLine() == -1)
+									throw new NotInitializedAssignException();
+							}
+						}
+					}
 					CodeBlock subBlock = Creator.parseCBLimits(data, i);
 					subBlock.addOldVariables(ToolBox.merge(this.oldMembers,
 							this.localMembers));
 					addSubCB(subBlock);
-					i = subBlock.getEndLine() - 1;
+					i = subBlock.getEndLine();
 					continue;
 				}
 				if (Classifier.isDeclerationLine(data[i])) {

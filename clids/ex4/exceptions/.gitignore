@@ -19,3 +19,4 @@
 /MethodDoesntExistsException.class
 /ParamsDoesntMatchException.class
 /NotInitializedAssignException.class
+/MustBeBooleanException.class
