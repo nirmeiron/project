@@ -2,7 +2,6 @@ package clids.ex4.misc;
 
 import clids.ex4.parser.*;
 
-
 public class NirPlayground {
 
 	private static final String VAR_NAME_RE = "_?(?:[a-zA-Z])+\\w*";
@@ -21,8 +20,8 @@ public class NirPlayground {
 			+ MULTI_PARAMS_RE + SPACE_RE + "\\)";
 
 	public static void main(String[] args) {
-		String st = " if(a||b){";
-		System.out.println(st.matches(Regex.CONDITION_LINE));
+		String st = "	void \t\t\t\t\tfoo                   (    int a      ,      String  \t b              )               {";
+		System.out.println(st.matches(Regex.METHOD_DEC_LINE));
 
 	}
 }

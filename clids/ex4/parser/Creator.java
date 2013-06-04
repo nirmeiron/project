@@ -179,13 +179,13 @@ public class Creator {
 	}
 
 	public static LinkedList<String> parseVarsCondition(String line) {
-		Pattern conditionPattern = Pattern.compile(Regex.CONDITION_LINE);
-		Matcher conditionMatcher = conditionPattern.matcher(line);
-		conditionMatcher.matches();
 
+		line = line.trim();
+		line = line.split("\\(")[1];
+		line = line.split("\\)")[0];
 		LinkedList<String> result = new LinkedList<String>();
 
-		String multiCons = conditionMatcher.group(1);
+		String multiCons = line;
 		multiCons.replaceAll("\\s", "");
 		String[] cons = multiCons.split(Regex.LOGICAL);
 		if (cons != null && cons.length > 0) {
@@ -211,11 +211,14 @@ public class Creator {
 	public static MethodCall parseMethodCall(String methodCall) {
 		LinkedList<String> result = new LinkedList<String>();
 		String methodName = methodCall.split("\\(")[0];
+		methodName = methodName.trim();
 		String params = methodCall.split("\\(")[1].split("\\)")[0];
 		if (!params.equals("")) {
 			String[] parameters = params.split(",");
-			for (String param : parameters)
+			for (String param : parameters) {
+				param = param.trim();
 				result.add(param);
+			}
 		}
 		return new MethodCall(methodName, result);
 	}
@@ -286,7 +289,8 @@ public class Creator {
 			String[] params = paramsLine.split(",");
 
 			for (String param : params) {
-				boolean isFinal = param.replaceAll("\\s", "").startsWith(
+				param = param.trim();
+				boolean isFinal = param.replaceAll("\\s*", "").startsWith(
 						"final");
 				Pattern pP = Pattern.compile(Regex.PARAM);
 				Matcher pM = pP.matcher(param);
