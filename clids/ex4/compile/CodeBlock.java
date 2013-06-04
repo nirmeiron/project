@@ -115,6 +115,7 @@ public class CodeBlock {
 	public void compile(String[] data) throws MessageException,
 			NoReturnStatementException {
 		for (int i = this.startLine + 1; i < this.endLine; i++) {
+			data[i]=data[i].trim();
 			try {
 				if (Classifier.isComment(data[i])
 						|| Classifier.isReturnStatement(data[i])) {

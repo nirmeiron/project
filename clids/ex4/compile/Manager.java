@@ -26,6 +26,7 @@ public class Manager {
 			throw new MessageException("IlegalBrackts");
 
 		for (int i = 0; i < data.length; i++) {
+			data[i] = data[i].trim();
 			try {
 				if (Classifier.isComment(data[i]) || data[i].equals("")) {
 					continue;

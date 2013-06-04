@@ -128,7 +128,7 @@ public class Classifier {
 	 * @return true iff the line is of the right form
 	 */
 	public static boolean isConditional(String line) {
-		line=line.replaceAll("\\s*", "");
+		line = line.trim();
 		Pattern conditionPattern = Pattern.compile(Regex.CONDITION_LINE);
 		Matcher conditionMatcher = conditionPattern.matcher(line);
 		return conditionMatcher.matches();
