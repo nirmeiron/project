@@ -10,11 +10,13 @@ Nir Meiron, 205947351, nirmeiron@gmail.com
                            Exercise 4 - s-java compiler
                           -------------------------- 
 
-Submitted Files
----------------
+--------------------------------		
+\\\\\\\\Submitted files/////////
+--------------------------------
 README - This file
 clids
 ex4
+	README - this file
 compile
 	Manager.java - a upper class containing a single method, "compile", that regulates and
 						manages all the program's action;
@@ -40,9 +42,7 @@ parser
 	Creator.java - parses the already sorted code, and get from the valuable information
 					needed to the compiler   
 	Regex.java - a class that stores a set of regexes, used by most other classes       
-filescript
-	MyFileScript.java - a class that contains the main method. receives an array of two strings,
-	the paths to the source directory and command file. launches the program
+
 exceptions
 	are thrown each time a particular error occurs, their names are self explanatory:
 		AlreadyInitializedException.java
@@ -65,13 +65,73 @@ exceptions
 --------------------------------		
 \\\\\\\\\\\\Design//////////////
 --------------------------------
-
+in this exercise, we implemented a quite complicated design. we wrote several packages,
+as detailed above. at all, the program runs line by line on the given file, creates
+matching objects for variables, methods an if/while blocks, and stores their relevant
+components for compiling. for each line read, the program checks (using the methods
+of Classifier) the code type of the line, and act accordingly; if it is a comment
+or empty line, nothing is performed; if it is a Variable(s) initialization line or
+a method declaration start line, the line is parsed using the Creator methods, and
+its data is stored in relevant object created for that purpose. if the line is not
+a comment, empty, declaration or method declaration, then it is illegal, and an
+exception is thrown. after parsing this general code line, the program focuses on each
+individual method block, with its inner method calls, variable assignments and declarations,
+and loops. the program recursively parses these inner loop, and verifies that all input
+are correct and exact, and throws an exception if an error is found.
 
 ---------------------------------
 \\\\\\implementation issues//////
 ---------------------------------
+	how to store information about declared variables and pass it to the methods and loops:
+we chose to use a linked list of variables that were correctly declared in the code,
+and pass it through the constructor to each method and code block, to their use.
+	how to check validity of method calls:
+each method block object contains an ordered list of valid parameters, and each
+MethodCall object contains an ordered list of parameters used in the call. the
+lists are compared to each other, and if a mismatch was found, an exception is thrown
+	how to know what is the type of the line:
+using regular expressions, we used boolean methods in Classifier to check if the
+current line matches the complex regular expressions we created in Regex.
+	how to check many nested code blocks:
+each code block contains a list of sub-code blocks(that can be empty), and the
+compiling is performed recursively.
 
+	adding a new type of variable:
+in order to add to the language a new type of variable, we would simply extend
+the Type enumerator class, and add about three line of code to the ToolBox's
+methods getTypeFromName, getTypeFromString and getStringFromType, so they could
+identify the variables and declarations of the new type
+
+	compiling "for" loops
+in order to allow "for" loops in our compiler, very few changes are required.
+first, we'll write a new regex for the "for" declaration, so it could be
+identified.
 
 --------------------------------
 \\\\\\\\error handling//////////
 --------------------------------
+
+error handling in the s-java code, which was this excercise's main goal, is implemented
+in our program using exceptions. as detailed in the "submitted files" section, we created
+many exceptions classes to deal with different types of error. each time our compile method,
+or methods called by it, finds an error in the code, an exceptions fitted to the type of
+error is thrown. the exception is than repeatedly thrown by almost all methods, and is caught
+only in the manager module. the manager appends to the exception message the current line,
+known only to the manager, and than throws it again to be caught and printed in the main
+method of the Sjavac class.
+we used this type of error handling because it is very modular and simple; only one module
+knows the current line number, all of the error handling is concentrated and handled in
+one place, and it is very easy to change or add new types of errors to the program, simply
+by writing new exceptions.
+
+
+
+
+
+
+
+
+
+
+
+
