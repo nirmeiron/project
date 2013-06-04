@@ -100,12 +100,15 @@ compiling is performed recursively.
 in order to add to the language a new type of variable, we would simply extend
 the Type enumerator class, and add about three line of code to the ToolBox's
 methods getTypeFromName, getTypeFromString and getStringFromType, so they could
-identify the variables and declarations of the new type
+identify the variables and declarations of the new type.
 
 	compiling "for" loops
 in order to allow "for" loops in our compiler, very few changes are required.
-first, we'll write a new regex for the "for" declaration, so it could be
-identified.
+first, we'll write a new regular expression for the "for" declaration, so it
+could be identified. then, some simple checks, similar to those in
+parseMethodCall, to see if the variables are well declared and assigned.
+then, the rest of the parsing - exactly like in any other CodeBlock, with the
+addition of the parameters declared in the "for" declaration line.
 
 --------------------------------
 \\\\\\\\error handling//////////
