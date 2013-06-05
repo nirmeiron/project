@@ -48,11 +48,13 @@ public class ToolBox {
 	}
 
 	/**
-	 * merges two linked lists to one, by adding all of the elements of the first
-	 * list, and then the second's
+	 * merges two linked lists to one, by adding all of the elements of the
+	 * first list, and then the second's
 	 * 
-	 * @param list1 - the first list
-	 * @param list2 - the second list
+	 * @param list1
+	 *            - the first list
+	 * @param list2
+	 *            - the second list
 	 * @return a merged linked list
 	 */
 	public static LinkedList<Variable> mergeList(LinkedList<Variable> list1,
@@ -67,15 +69,25 @@ public class ToolBox {
 		return result;
 	}
 
-	//MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
+	/**
+	 * adds a line number declaration to the thrown exceptions' messages, and
+	 * returns them as new exceptions
+	 * 
+	 * @param className
+	 * @param i
+	 * @return
+	 */
 	public static MessageException editMessage(String className, int i) {
 		String[] parts = className.split("\\.");
 		return new MessageException(parts[parts.length - 1] + " in line: " + i);
 	}
 
 	/**
-	 * parses a given file to an array of strings, each of them a code line from the file
-	 * @param fileName - the name of the line
+	 * parses a given file to an array of strings, each of them a code line from
+	 * the file
+	 * 
+	 * @param fileName
+	 *            - the name of the line
 	 * @return an array of strings with the code's lines
 	 * @throws IOException
 	 */
@@ -165,7 +177,6 @@ public class ToolBox {
 		}
 	}
 
-
 	/**
 	 * this method gets a List of Variables and copies them to a new list.
 	 * creating each variable a duplicate.
@@ -196,6 +207,7 @@ public class ToolBox {
 
 	/**
 	 * checks if a given variable exists in a given list
+	 * 
 	 * @param member
 	 * @param list
 	 * @return
@@ -212,6 +224,7 @@ public class ToolBox {
 
 	/**
 	 * checks if a variable of a given name exists in a given list
+	 * 
 	 * @param varName
 	 * @param list
 	 * @return

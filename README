@@ -7,12 +7,13 @@ Ira Rosenblum, 312508856, elirasa2@gmail.com
 Nir Meiron, 205947351, nirmeiron@gmail.com
 =======================================================
 
-                           Exercise 4 - s-java compiler
+                         Exercise 4 - s-java compiler
                           -------------------------- 
 
 --------------------------------		
 \\\\\\\\Submitted files/////////
 --------------------------------
+
 README - This file
 clids
 ex4
@@ -62,9 +63,11 @@ exceptions
 		UnexpectedLineException.java
 		VarAlreadyExistsException.java
 		VarNotExistsException.java
+		
 --------------------------------		
 \\\\\\\\\\\\Design//////////////
 --------------------------------
+
 in this exercise, we implemented a quite complicated design. we wrote several packages,
 as detailed above. at all, the program runs line by line on the given file, creates
 matching objects for variables, methods an if/while blocks, and stores their relevant
@@ -82,6 +85,7 @@ are correct and exact, and throws an exception if an error is found.
 ---------------------------------
 \\\\\\implementation issues//////
 ---------------------------------
+
 	how to store information about declared variables and pass it to the methods and loops:
 we chose to use a linked list of variables that were correctly declared in the code,
 and pass it through the constructor to each method and code block, to their use.
@@ -126,15 +130,3 @@ we used this type of error handling because it is very modular and simple; only 
 knows the current line number, all of the error handling is concentrated and handled in
 one place, and it is very easy to change or add new types of errors to the program, simply
 by writing new exceptions.
-
-
-
-
-
-
-
-
-
-
-
-
