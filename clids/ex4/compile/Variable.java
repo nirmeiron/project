@@ -4,9 +4,9 @@ import clids.ex4.misc.Type;
 
 /**
  * a class that represents a variable that was declared in s-java, and hold all
- * of its characteristics that are required for compiling checking
+ * of its properties that are required for compile checking
  * 
- * @author Nir and Ira
+ * @author Nir & Ira
  * 
  */
 public class Variable {
@@ -15,26 +15,56 @@ public class Variable {
 	private String name;
 	private Type type;
 	private boolean isFinal;
-	private int intialisationLine;
+	private int initializationLine;
 
-	// CONSTRUCTORs
+	/**
+	 * a constructor that gets whether the variable is final, its type, its name
+	 * and its initialization line
+	 * 
+	 * @param isFinal
+	 *            - whether the variable is final
+	 * @param type
+	 *            - the variable's type
+	 * @param name
+	 *            - the variable's name
+	 * @param initializationLine
+	 *            the variable's
+	 */
 	public Variable(boolean isFinal, Type type, String name,
-			int intialisationLine) {
-		this.intialisationLine = intialisationLine;
+			int initializationLine) {
+		this.initializationLine = initializationLine;
 		this.isFinal = isFinal;
 		this.name = name;
 		this.type = type;
 	}
 
+	/**
+	 * a constructor that gets whether the variable is final, its type and its
+	 * name
+	 * 
+	 * @param isFinal
+	 *            - whether the variable is final
+	 * @param type
+	 *            - the variable's type
+	 * @param name
+	 *            - the variable's name
+	 * @param initializationLine
+	 *            the variable's
+	 */
 	public Variable(boolean isFinal, Type type, String name) {
-		this.intialisationLine = -1;
+		this.initializationLine = -1;
 		this.isFinal = isFinal;
 		this.name = name;
 		this.type = type;
 	}
 
+	/**
+	 * a copy constructor that gets another variable an copies its properties
+	 * 
+	 * @param other
+	 */
 	public Variable(Variable other) {
-		this.intialisationLine = other.intialisationLine;
+		this.initializationLine = other.initializationLine;
 		this.isFinal = other.isFinal;
 		this.name = other.name;
 		this.type = other.type;
@@ -59,7 +89,7 @@ public class Variable {
 	 * @return the intialisationLine
 	 */
 	public int getIntialisationLine() {
-		return intialisationLine;
+		return initializationLine;
 	}
 
 	/**
@@ -67,7 +97,7 @@ public class Variable {
 	 *            the intialisationLine to set
 	 */
 	public void setIntialisationLine(int intialisationLine) {
-		this.intialisationLine = intialisationLine;
+		this.initializationLine = intialisationLine;
 	}
 
 	/**
@@ -84,12 +114,14 @@ public class Variable {
 		return isFinal;
 	}
 
+	/**
+	 * 
+	 * @param other
+	 *            - another variable
+	 * @return if the this variable and the other variable have the same name
+	 */
 	public boolean equals(Variable other) {
 		return this.name.equals(other.name);
 	}
 
-	// DELETE ME::::::
-	public String toString() {
-		return this.name + ", " + this.type + ", " + this.isFinal;
-	}
 }

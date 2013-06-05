@@ -4,7 +4,6 @@ import clids.ex4.compile.Variable;
 
 import java.util.LinkedList;
 import clids.ex4.exceptions.DoubleDeclarationException;
-import clids.ex4.exceptions.InvalidValueException;
 import clids.ex4.exceptions.MessageException;
 import clids.ex4.exceptions.NotInitializedAssignException;
 import clids.ex4.exceptions.UnexpectedLineException;
@@ -12,15 +11,31 @@ import clids.ex4.exceptions.VarNotExistsException;
 import clids.ex4.parser.*;
 import clids.ex4.misc.*;
 
+/**
+ * a class that runs the program
+ * 
+ * @author Nir & ira
+ * 
+ */
 public class Manager {
 	public static LinkedList<MethodBlock> allMethods;
 	public LinkedList<Variable> allVars;
 
+	/**
+	 * a simple constructor
+	 */
 	public Manager() {
 		Manager.allMethods = new LinkedList<MethodBlock>();
 		this.allVars = new LinkedList<Variable>();
 	}
 
+	/**
+	 * a method that performs the compilation on the entire given code
+	 * 
+	 * @param data
+	 *            - the code to compile
+	 * @throws MessageException
+	 */
 	public void compile(String[] data) throws MessageException {
 		if (!ToolBox.legalBrackets(data))
 			throw new MessageException("IlegalBrackts");

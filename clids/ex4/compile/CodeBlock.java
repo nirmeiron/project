@@ -71,20 +71,6 @@ public class CodeBlock {
 		this.oldMembers = new LinkedList<Variable>();
 	}
 
-	// אולי לא צריך את המתודה הבאה !! ******************************************
-	/**
-	 * this method inserts a list of variables to the oldMember making a copy of
-	 * each variable.
-	 * 
-	 * @param oldies
-	 */
-	public void insertOldMembers(LinkedList<Variable> oldies) {
-		this.oldMembers = new LinkedList<Variable>();
-		for (Variable var : oldies) {
-			this.oldMembers.add(new Variable(var));
-		}
-	}
-
 	/**
 	 * insert a new member that was declared, if it's legal.
 	 * 
@@ -111,18 +97,24 @@ public class CodeBlock {
 		this.subCB.add(sub);
 	}
 
-	// !
+	/**
+	 * a method that checks the validity of the content of the code block.
+	 * parses the cod line by line: if an error is found, an appropriate
+	 * exception is thrown; if none is found, nothing happens
+	 * 
+	 * @param data
+	 *            - the code to compile
+	 * @throws MessageException
+	 * @throws NoReturnStatementException
+	 */
 	public void compile(String[] data) throws MessageException,
 			NoReturnStatementException {
 		for (int i = this.startLine + 1; i < this.endLine; i++) {
-			data[i]=data[i].trim();
+			data[i] = data[i].trim();
 			try {
 				if (Classifier.isComment(data[i])
 						|| Classifier.isReturnStatement(data[i])) {
 					continue;
-				}
-				if (Classifier.isMethodLine(data[i])) {
-					throw new UnexpectedLineException();
 				}
 				if (Classifier.isConditional(data[i])) {
 					LinkedList<String> usedVars = Creator
@@ -263,6 +255,13 @@ public class CodeBlock {
 
 	}
 
+	/**
+	 * finds an return a method of a given name, if exists in the manager's
+	 * methods list
+	 * 
+	 * @param name - the name of the method to look for
+	 * @return the method if found, null if not
+	 */
 	private MethodBlock methodFinder(String name) {
 		for (MethodBlock method : Manager.allMethods) {
 			if (method.getName().equals(name))
@@ -271,25 +270,6 @@ public class CodeBlock {
 		return null;
 	}
 
-	private Type getTypeFromVarName(String value) throws VarNotExistsException {
-		Type result;
-		try {
-			result = ToolBox.getTypeFromName(value);
-		} catch (InvalidValueException e) {
-			int indexInLocal2 = ToolBox.existsInList(value, this.localMembers);
-			int indexInOlds2 = ToolBox.existsInList(value, this.oldMembers);
-
-			if (indexInLocal2 == -1 && indexInOlds2 == -1) {
-				throw new VarNotExistsException();
-			}
-			if (indexInLocal2 != -1) {
-				result = this.localMembers.get(indexInLocal2).getType();
-			} else {
-				result = this.oldMembers.get(indexInOlds2).getType();
-			}
-		}
-		return result;
-	}
 
 	private Type getTypeFromValue(String value) throws VarNotExistsException {
 		Type result;
@@ -312,7 +292,7 @@ public class CodeBlock {
 	}
 
 	/**
-	 * insert a new assignment.
+	 * inserts a new assignment.
 	 * 
 	 * @param member
 	 * @throws AssignToUndeclaredException
@@ -351,11 +331,19 @@ public class CodeBlock {
 
 	}
 
+	/**
+	 * returns the start line of the code block
+	 * @return the start line of the code block
+	 */
 	public int getStartLine() {
 
 		return this.startLine;
 	}
 
+	/**
+	 * returns the end line of the code block
+	 * @return the end line of the code block
+	 */
 	public int getEndLine() {
 		return this.endLine;
 	}
