@@ -1,8 +1,14 @@
 package clids.ex4.parser;
 
+/**
+ * a class that stores many regular expressions used in the program
+ * 
+ * @author t6631696
+ * 
+ */
 public class Regex {
 
-	// Basics
+	// Basics;
 	public static final String SPACE = "[\\s\\t]*";
 	public static final String MUST_SPACE = "[\\s]+";
 	public static final String METHOD_NAME = "(?:[a-zA-Z])+\\w*";
@@ -19,6 +25,7 @@ public class Regex {
 	public static final String VALUE = "(?:(?:" + CHAR_RE + ")|(?:"
 			+ BOOLEAN_RE + ")|(?:" + STRING_RE + "))";
 
+	// Variables declarations:
 	public static final String TYPE_RE = "(int|double|String|boolean|char)";
 	public static final String DECLARATION = "(" + VAR_NAME + ")" + SPACE
 			+ "(?:(=" + SPACE + "(?:" + VALUE + "|" + VAR_NAME + ")" + ")?)";
@@ -31,6 +38,7 @@ public class Regex {
 
 	public static final String ASSIGN_LINE = DECLARATION + ";" + SPACE;
 
+	// methods declarations:
 	public static final String PARAM = "(?:final)?" + SPACE + "(" + TYPE_RE
 			+ ")" + MUST_SPACE + VAR_NAME;
 	public static final String MULTI_PARAMS = "(" + PARAM + "(?:" + SPACE + ","
@@ -40,14 +48,16 @@ public class Regex {
 			+ "(" + METHOD_NAME + ")" + SPACE + "\\(" + SPACE + MULTI_PARAMS
 			+ SPACE + "\\)" + SPACE + "\\{" + SPACE;
 
+	// methods calls:
 	public static final String CALL_PARAM = "(?:(?:" + VAR_NAME + ")|(?:"
 			+ VALUE + "))";
 	public static final String CALL_MULTI_PARAMS = CALL_PARAM + "(?:" + SPACE
 			+ "," + SPACE + CALL_PARAM + ")*";
-	public static final String METHOD_CALL = SPACE + "(" + METHOD_NAME + ")"+SPACE+"\\("
-			+ SPACE + "(?:" + SPACE + CALL_MULTI_PARAMS + SPACE + ")?\\)"
-			+ SPACE + ";" + SPACE;
+	public static final String METHOD_CALL = SPACE + "(" + METHOD_NAME + ")"
+			+ SPACE + "\\(" + SPACE + "(?:" + SPACE + CALL_MULTI_PARAMS + SPACE
+			+ ")?\\)" + SPACE + ";" + SPACE;
 
+	// boolean expressions:
 	public static final String CONDITION = "(?:" + BOOLEAN_RE + "|" + VAR_NAME
 			+ ")";
 	public static final String OR = "\\|\\|";

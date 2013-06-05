@@ -14,7 +14,7 @@ import clids.ex4.misc.ToolBox;
 import clids.ex4.misc.Type;
 
 /**
- * 
+ * a class that classifies different inputs
  * @author Nir&Ira
  * 
  */
@@ -191,6 +191,11 @@ public class Classifier {
 		return data[lineNum].matches(Regex.RETURN_LINE);
 	}
 
+	/**
+	 * checks if a given string is of the form "return;"
+	 * @param string
+	 * @return
+	 */
 	public static boolean isReturnStatement(String string) {
 		return string.matches(Regex.RETURN_LINE);
 	}

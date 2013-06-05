@@ -15,7 +15,14 @@ import clids.ex4.exceptions.VarAlreadyExistsException;
 import clids.ex4.misc.ToolBox;
 import clids.ex4.misc.Type;
 
-//general comment - all parse method assume validity of input, at least for their analysis
+/**
+ * a class that creates appropriate objects for given inputs
+ * 
+ * @author Nir & Ira
+ * 
+ */
+// general comment - all parse method assume validity of input, at least for
+// their analysis
 public class Creator {
 
 	/**
@@ -178,6 +185,11 @@ public class Creator {
 		return result;
 	}
 
+	/**
+	 * parses a line of logical and boolean expressions
+	 * @param line - the line to parse
+	 * @return a list of strings with the boolean expressions
+	 */
 	public static LinkedList<String> parseVarsCondition(String line) {
 
 		line = line.trim();

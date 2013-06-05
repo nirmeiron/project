@@ -147,7 +147,7 @@ public class CodeBlock {
 						}
 					}
 					CodeBlock subBlock = Creator.parseCBLimits(data, i);
-					subBlock.addOldVariables(ToolBox.merge(this.oldMembers,
+					subBlock.addOldVariables(ToolBox.mergeList(this.oldMembers,
 							this.localMembers));
 					addSubCB(subBlock);
 					i = subBlock.getEndLine();

@@ -4,7 +4,19 @@ import clids.ex4.misc.ToolBox;
 import clids.ex4.compile.Manager;
 import clids.ex4.exceptions.MessageException;
 
+/**
+ * the main class, used to launch the program
+ * 
+ * @author Nir & Ira
+ * 
+ */
 public class Sjavac {
+	/**
+	 * the main method, launches the program
+	 * 
+	 * @param args
+	 *            - the name of the file name where the code is stored
+	 */
 	public static void main(String[] args) {
 		String[] data = null;
 		try {

@@ -1,7 +1,5 @@
 package clids.ex4.misc;
 
-//hey ira
-//hey nir
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,8 +15,21 @@ import clids.ex4.exceptions.InvalidValueException;
 import clids.ex4.exceptions.MessageException;
 import clids.ex4.parser.Regex;
 
+/**
+ * a tool box class, for general helper methods useful throughout the program
+ * 
+ * @author Nir & Ira
+ * 
+ */
 public class ToolBox {
 
+	/**
+	 * determines whether the brackets in the file are legal
+	 * 
+	 * @param data
+	 *            - the code lines
+	 * @return whether the brackets in the file are legal
+	 */
 	public static boolean legalBrackets(String[] data) {
 		int counter = 0;
 		for (int i = 0; i < data.length; i++) {
@@ -36,7 +47,15 @@ public class ToolBox {
 		return counter == 0;
 	}
 
-	public static LinkedList<Variable> merge(LinkedList<Variable> list1,
+	/**
+	 * merges two linked lists to one, by adding all of the elements of the first
+	 * list, and then the second's
+	 * 
+	 * @param list1 - the first list
+	 * @param list2 - the second list
+	 * @return a merged linked list
+	 */
+	public static LinkedList<Variable> mergeList(LinkedList<Variable> list1,
 			LinkedList<Variable> list2) {
 		LinkedList<Variable> result = new LinkedList<Variable>();
 		for (Variable var : list1) {
@@ -48,11 +67,18 @@ public class ToolBox {
 		return result;
 	}
 
+	//MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
 	public static MessageException editMessage(String className, int i) {
 		String[] parts = className.split("\\.");
 		return new MessageException(parts[parts.length - 1] + " in line: " + i);
 	}
 
+	/**
+	 * parses a given file to an array of strings, each of them a code line from the file
+	 * @param fileName - the name of the line
+	 * @return an array of strings with the code's lines
+	 * @throws IOException
+	 */
 	public static String[] importData(String fileName) throws IOException {
 		File theFile = new File(fileName);
 		ArrayList<String> data = new ArrayList<>();
@@ -115,7 +141,7 @@ public class ToolBox {
 	}
 
 	/**
-	 * converts Type to String
+	 * converts Type to its string name
 	 * 
 	 * @param var
 	 * @return
@@ -139,20 +165,6 @@ public class ToolBox {
 		}
 	}
 
-	/**
-	 * prints the variables' namees
-	 * 
-	 * @param vars
-	 * @throws InvalidValueException
-	 */
-	public static void printData(ArrayList<Variable> vars)
-			throws InvalidValueException {
-		System.out.print((vars.get(0).isFinal() ? "final " : "")
-				+ ToolBox.getStringFromType(vars.get(0)));
-		for (Variable var : vars) {
-			System.out.print(" " + var.getName());
-		}
-	}
 
 	/**
 	 * this method gets a List of Variables and copies them to a new list.
@@ -182,8 +194,12 @@ public class ToolBox {
 		return vM.matches();
 	}
 
-	
-
+	/**
+	 * checks if a given variable exists in a given list
+	 * @param member
+	 * @param list
+	 * @return
+	 */
 	public static int existsInList(Variable member, LinkedList<Variable> list) {
 		if (list == null)
 			return -1;
@@ -194,6 +210,12 @@ public class ToolBox {
 		return -1;
 	}
 
+	/**
+	 * checks if a variable of a given name exists in a given list
+	 * @param varName
+	 * @param list
+	 * @return
+	 */
 	public static int existsInList(String varName, LinkedList<Variable> list) {
 		return existsInList(new Variable(false, null, varName), list);
 	}
